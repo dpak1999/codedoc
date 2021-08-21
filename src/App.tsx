@@ -1,14 +1,37 @@
 /** @format */
 
-import { useState } from "react";
+import * as esbuild from "esbuild-wasm";
+import { useState, useEffect, useRef } from "react";
+import { unpkgPathPlugin } from "./plugins/unpkg-path-plugin";
 
 function App() {
   const [input, setInput] = useState("");
   const [code, setCode] = useState("");
+  const ref = useRef<any>();
 
-  const handleClick = () => {
-    console.log(input);
+  const startService = async () => {
+    ref.current = await esbuild.startService({
+      worker: true,
+      wasmURL: "/esbuild.wasm",
+    });
   };
+
+  const handleClick = async () => {
+    if (!ref.current) return;
+
+    const res = await ref.current.build({
+      entryPoints: ["index.js"],
+      bundle: true,
+      write: false,
+      plugins: [unpkgPathPlugin()],
+    });
+
+    setCode(res.outputFiles[0].text);
+  };
+
+  useEffect(() => {
+    startService();
+  }, []);
 
   return (
     <div>
