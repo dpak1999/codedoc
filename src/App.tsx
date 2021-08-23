@@ -9,6 +9,7 @@ function App() {
   const [input, setInput] = useState("");
   const [code, setCode] = useState("");
   const ref = useRef<any>();
+  const iframe = useRef<any>();
 
   const startService = async () => {
     ref.current = await esbuild.startService({
@@ -31,12 +32,38 @@ function App() {
       },
     });
 
-    setCode(res.outputFiles[0].text);
+    // setCode(res.outputFiles[0].text);
+    iframe.current.contentWindow.postMessage(res.outputFiles[0].text, "*");
   };
 
   useEffect(() => {
     startService();
   }, []);
+
+  const html = `
+   <!DOCTYPE html>
+   <html lang="en">
+   <head>
+     <meta charset="UTF-8" />
+     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <title>Document</title>
+   </head>
+   <body>
+     <div id="root"></div>
+     <script>
+     window.addEventListener("message",(event) => {
+       try {
+        eval(event.data)
+       } catch (error) {
+         
+       }
+     },false)
+     
+     </script>
+   </body>
+   </html>
+  `;
 
   return (
     <div>
@@ -50,6 +77,7 @@ function App() {
         <button onClick={handleClick}>Submit</button>
       </div>
       <pre>{code}</pre>
+      <iframe sandbox="allow-scripts" title="test" srcDoc={html} ref={iframe} />
     </div>
   );
 }
