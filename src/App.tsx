@@ -2,6 +2,7 @@
 
 import * as esbuild from "esbuild-wasm";
 import { useState, useEffect, useRef } from "react";
+import CodeEditor from "./components/code-editor";
 import { fetchPlugin } from "./plugins/fetch-plugin";
 import { unpkgPathPlugin } from "./plugins/unpkg-path-plugin";
 
@@ -62,6 +63,7 @@ function App() {
 
   return (
     <div>
+      <CodeEditor />
       <textarea
         name="text"
         id="text"
