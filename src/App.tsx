@@ -1,20 +1,20 @@
 /** @format */
 
-import * as esbuild from "esbuild-wasm";
-import { useState, useEffect, useRef } from "react";
-import CodeEditor from "./components/code-editor";
-import { fetchPlugin } from "./plugins/fetch-plugin";
-import { unpkgPathPlugin } from "./plugins/unpkg-path-plugin";
+import * as esbuild from 'esbuild-wasm';
+import { useState, useEffect, useRef } from 'react';
+import CodeEditor from './components/code-editor';
+import { fetchPlugin } from './plugins/fetch-plugin';
+import { unpkgPathPlugin } from './plugins/unpkg-path-plugin';
 
 function App() {
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState('');
   const ref = useRef<any>();
   const iframe = useRef<any>();
 
   const startService = async () => {
     ref.current = await esbuild.startService({
       worker: true,
-      wasmURL: "https://unpkg.com/esbuild-wasm@0.8.27/esbuild.wasm",
+      wasmURL: 'https://unpkg.com/esbuild-wasm@0.8.27/esbuild.wasm',
     });
   };
 
@@ -24,17 +24,17 @@ function App() {
     iframe.current.srcdoc = html;
 
     const res = await ref.current.build({
-      entryPoints: ["index.js"],
+      entryPoints: ['index.js'],
       bundle: true,
       write: false,
       plugins: [unpkgPathPlugin(), fetchPlugin(input)],
       define: {
-        "process.env.NODE_ENV": '"production"',
-        global: "window",
+        'process.env.NODE_ENV': '"production"',
+        global: 'window',
       },
     });
 
-    iframe.current.contentWindow.postMessage(res.outputFiles[0].text, "*");
+    iframe.current.contentWindow.postMessage(res.outputFiles[0].text, '*');
   };
 
   useEffect(() => {
@@ -63,7 +63,10 @@ function App() {
 
   return (
     <div>
-      <CodeEditor />
+      <CodeEditor
+        onChange={(value) => setInput(value)}
+        initialValue="const a = 1;"
+      />
       <textarea
         name="text"
         id="text"
