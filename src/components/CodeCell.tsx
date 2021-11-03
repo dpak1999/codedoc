@@ -1,11 +1,11 @@
 /** @format */
 
 import { useState } from 'react';
-import { bundle } from './bundler';
-import CodeEditor from './components/code-editor';
-import Preview from './components/Preview';
+import { bundle } from '../bundler';
+import CodeEditor from '../components/code-editor';
+import Preview from '../components/Preview';
 
-function App() {
+function CodeCell() {
   const [input, setInput] = useState('');
   const [code, setCode] = useState('');
 
@@ -28,4 +28,4 @@ function App() {
   );
 }
 
-export default App;
+export default CodeCell;

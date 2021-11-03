@@ -1,14 +1,14 @@
 /** @format */
 
-import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import 'bulmaswatch/superhero/bulmaswatch.min.css';
+import CodeCell from './components/CodeCell';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <div>
+    <CodeCell />
+    <CodeCell />
+  </div>,
   document.getElementById('root')
 );
