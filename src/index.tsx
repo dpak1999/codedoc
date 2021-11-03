@@ -8,7 +8,7 @@ import CodeCell from './components/CodeCell';
 ReactDOM.render(
   <div>
     <CodeCell />
-    <CodeCell />
+    {/* <CodeCell /> */}
   </div>,
   document.getElementById('root')
 );
