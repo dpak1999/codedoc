@@ -1,7 +1,7 @@
 /** @format */
 
 import { useState, useEffect } from 'react';
-import { bundle } from '../bundler';
+import bundle from '../bundler';
 import CodeEditor from '../components/code-editor';
 import Preview from '../components/Preview';
 import Resizeable from './Resizeable';
@@ -9,11 +9,13 @@ import Resizeable from './Resizeable';
 function CodeCell() {
   const [input, setInput] = useState('');
   const [code, setCode] = useState('');
+  const [err, setErr] = useState('');
 
   useEffect(() => {
     const timer = setTimeout(async () => {
       const output = await bundle(input);
-      setCode(output);
+      setCode(output.code);
+      setErr(output.err);
     }, 1000);
 
     return () => {
@@ -30,7 +32,7 @@ function CodeCell() {
             initialValue="const a = 1;"
           />
         </Resizeable>
-        <Preview code={code} />
+        <Preview code={code} bundlingStatus={err} />
       </div>
     </Resizeable>
   );
