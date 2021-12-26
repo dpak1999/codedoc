@@ -1,7 +1,7 @@
 /** @format */
 
 import { useEffect, useRef } from 'react';
-import './preview.css';
+import './css/preview.css';
 
 interface PreviewProps {
   code: string;
