@@ -1,19 +1,25 @@
 /** @format */
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import bundle from '../bundler';
 import CodeEditor from '../components/code-editor';
 import Preview from '../components/Preview';
+import { useActions } from '../hooks/use-actions';
+import { Cell } from '../state';
 import Resizeable from './Resizeable';
 
-function CodeCell() {
-  const [input, setInput] = useState('');
+interface CodeCellPropType {
+  cell: Cell;
+}
+
+const CodeCell: React.FC<CodeCellPropType> = ({ cell }) => {
   const [code, setCode] = useState('');
   const [err, setErr] = useState('');
+  const { updateCell } = useActions();
 
   useEffect(() => {
     const timer = setTimeout(async () => {
-      const output = await bundle(input);
+      const output = await bundle(cell.content);
       setCode(output.code);
       setErr(output.err);
     }, 1000);
@@ -21,21 +27,21 @@ function CodeCell() {
     return () => {
       clearTimeout(timer);
     };
-  }, [input]);
+  }, [cell.content]);
 
   return (
     <Resizeable direction="vertical">
       <div style={{ height: '100%', display: 'flex' }}>
         <Resizeable direction="horizontal">
           <CodeEditor
-            onChange={(value) => setInput(value)}
-            initialValue="const a = 1;"
+            onChange={(value) => updateCell(cell.id, value)}
+            initialValue={cell.content}
           />
         </Resizeable>
         <Preview code={code} bundlingStatus={err} />
       </div>
     </Resizeable>
   );
-}
+};
 
 export default CodeCell;
