@@ -5,7 +5,7 @@ import { ActionType } from '../action-types';
 import { Action } from '../actions';
 
 interface BundleState {
-  [key: string]: { loading: boolean; code: string; err: string };
+  [key: string]: undefined | { loading: boolean; code: string; err: string };
 }
 
 const initialState: BundleState = {};
