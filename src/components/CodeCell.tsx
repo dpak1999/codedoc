@@ -7,7 +7,7 @@ import { useActions } from '../hooks/use-actions';
 import { useTypedSelector } from '../hooks/use-typed-selector';
 import { Cell } from '../state';
 import Resizeable from './Resizeable';
-
+import './css/code-cell.css';
 interface CodeCellPropType {
   cell: Cell;
 }
@@ -41,11 +41,17 @@ const CodeCell: React.FC<CodeCellPropType> = ({ cell }) => {
             initialValue={cell.content}
           />
         </Resizeable>
-        {!bundle || bundle.loading ? (
-          <div>Loading...</div>
-        ) : (
-          <Preview code={bundle?.code} bundlingStatus={bundle?.err} />
-        )}
+        <div className="progress-wrapper">
+          {!bundle || bundle.loading ? (
+            <div className="progress-cover">
+              <progress className="progress is-small is-primary" max="100">
+                Loading
+              </progress>
+            </div>
+          ) : (
+            <Preview code={bundle?.code} bundlingStatus={bundle?.err} />
+          )}
+        </div>
       </div>
     </Resizeable>
   );
