@@ -5,6 +5,9 @@
   "repository": "https://github.com/dpak1999/codedoc.git",
   "author": "deepak <deepakkumardash313@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "start": "lerna run start --parallel"
+  },
   "devDependencies": {
     "lerna": "^4.0.0"
   }
