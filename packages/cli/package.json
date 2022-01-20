@@ -1,5 +1,5 @@
 {
-  "name": "cli",
+  "name": "codeoc",
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "commander": "^8.3.0",
-    "local-api": "^1.0.0"
+    "@codeoc/local-api": "^1.0.0"
   },
   "devDependencies": {
     "@types/node": "^17.0.9",
