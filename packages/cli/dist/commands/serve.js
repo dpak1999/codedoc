@@ -25,8 +25,15 @@ exports.serveCommand = new commander_1.Command()
     try {
         const dir = path_1.default.join(process.cwd(), path_1.default.dirname(filename));
         yield (0, local_api_1.serve)(parseInt(options.port), path_1.default.basename(filename), dir);
+        console.log(`Opened ${filename}. Navigate to http://localhost:${options.port} to edit the file.`);
     }
     catch (error) {
-        console.log(error.message);
+        if (error.code === 'EADDRINUSE') {
+            console.error('Port is already in use please try another port');
+        }
+        else {
+            console.log(error.message);
+        }
+        process.exit(1);
     }
 }));
