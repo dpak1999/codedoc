@@ -3,8 +3,15 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "tsc --watch --preserveWatchOutput"
+    "start": "tsc --watch --preserveWatchOutput",
+    "prepublishOnly": "tsc"
+
   },
+  "files": ["dist"],
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": "dist/index.js",
   "dependencies": {
     "commander": "^8.3.0",
     "@codeoc/local-api": "^1.0.0"
