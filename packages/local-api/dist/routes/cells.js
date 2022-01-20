@@ -27,7 +27,7 @@ const createCellsRouter = (filename, dir) => {
             res.send(JSON.parse(result));
         }
         catch (error) {
-            if (error.code === 'ENONT') {
+            if (error.code === 'ENOENT') {
                 yield promises_1.default.writeFile(fullPath, '[]', 'utf-8');
                 res.send([]);
             }
