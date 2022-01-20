@@ -4,20 +4,24 @@
   "license": "MIT",
   "scripts": {
     "start": "tsc --watch --preserveWatchOutput",
-    "prepublishOnly": "tsc"
+    "prepublishOnly": "esbuild src/index.ts --platform=node --outfile=dist/index.js --bundle --minify --define:process.env.NODE_ENV=\\\"production\\\""
 
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "publishConfig": {
     "access": "public"
   },
   "bin": "dist/index.js",
   "dependencies": {
-    "commander": "^8.3.0",
-    "@codeoc/local-api": "^1.0.0"
+    "@codeoc/local-client": "^1.0.0"
   },
   "devDependencies": {
     "@types/node": "^17.0.9",
+    "@codeoc/local-api": "^1.0.0",
+    "commander": "^8.3.0",
+    "esbuild": "0.8.26",
     "typescript": "^4.5.4"
   }
 }
